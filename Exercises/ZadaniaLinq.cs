@@ -31,7 +31,7 @@ public sealed class ZadaniaLinq
     /// </summary>
     public IEnumerable<string> Zadanie02_AdresyEmailStudentow()
     {
-        
+        return DaneUczelni.Studenci.Select(e => e.Email);
         throw Niezaimplementowano(nameof(Zadanie02_AdresyEmailStudentow));
     }
 
@@ -47,6 +47,7 @@ public sealed class ZadaniaLinq
     /// </summary>
     public IEnumerable<string> Zadanie03_StudenciPosortowani()
     {
+        return DaneUczelni.Studenci.OrderBy(e => e.Nazwisko).ThenBy(e => e.Imie).Select(e=> e.NumerIndeksu + " " + e.Imie + " " + e.Nazwisko);
         throw Niezaimplementowano(nameof(Zadanie03_StudenciPosortowani));
     }
 
@@ -62,6 +63,8 @@ public sealed class ZadaniaLinq
     /// </summary>
     public IEnumerable<string> Zadanie04_PierwszyPrzedmiotAnalityczny()
     {
+        return [DaneUczelni.Przedmioty.Where(e => e.Kategoria == "Analytics")
+            .Select(e => e.Nazwa + " " + e.DataStartu).FirstOrDefault("brak takiego przedmiotu")];
         throw Niezaimplementowano(nameof(Zadanie04_PierwszyPrzedmiotAnalityczny));
     }
 
@@ -79,6 +82,7 @@ public sealed class ZadaniaLinq
     /// </summary>
     public IEnumerable<string> Zadanie05_CzyIstniejeNieaktywneZapisanie()
     {
+        return [DaneUczelni.Zapisy.Where(e => e.CzyAktywny == false).Select(e => "Istnieje nieaktywny zapis" ).FirstOrDefault("Nie istnieje nieaktywny zapis")];
         throw Niezaimplementowano(nameof(Zadanie05_CzyIstniejeNieaktywneZapisanie));
     }
 
@@ -94,6 +98,7 @@ public sealed class ZadaniaLinq
     /// </summary>
     public IEnumerable<string> Zadanie06_CzyWszyscyProwadzacyMajaKatedre()
     {
+        return [DaneUczelni.Prowadzacy.Count() == DaneUczelni.Prowadzacy.Where(e => e.Katedra != null).Select(e=>e.Nazwisko) ? "b" : "a"];
         throw Niezaimplementowano(nameof(Zadanie06_CzyWszyscyProwadzacyMajaKatedre));
     }
 
