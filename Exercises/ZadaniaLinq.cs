@@ -248,8 +248,8 @@ public sealed class ZadaniaLinq
     /// </summary>
     public IEnumerable<string> Zadanie15_ProwadzacyILiczbaPrzedmiotow()
     {
-        return DaneUczelni.Prowadzacy.Join(DaneUczelni.Przedmioty, p => p.Id, prz => prz.ProwadzacyId, 
-            (p, prz)=>new {imie = p.Imie, nazwisko = p.Nazwisko, Id = prz.Id}).GroupBy(e => new {e.imie, e.nazwisko  }).
+        return DaneUczelni.Prowadzacy.GroupJoin(DaneUczelni.Przedmioty, p => p.Id, prz => prz.ProwadzacyId, 
+                (p, prz)=>new {imie = p.Imie, nazwisko = p.Nazwisko, prz}).SelectMany(z => z.prz.DefaultIfEmpty(), (p, przedmiot) =>new {p, przedmiot}  ).GroupBy(e => new {e.p.imie, e.p.nazwisko  }).
             Select(e => e.Key.imie +" "+ e.Key.nazwisko + " " + e.Count());
         throw Niezaimplementowano(nameof(Zadanie15_ProwadzacyILiczbaPrzedmiotow));
     }
